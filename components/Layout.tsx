@@ -8,12 +8,12 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children, title }) => {
   return (
-    <div className="bg-grey-300">
+    <div className="bg-gray-300">
       <Head>
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="container mx-auto max-w-xl pt-8 min-h-screen">
+      <main className="container max-w-xl min-h-screen pt-8 mx-auto">
         {children}
       </main>
     </div>
