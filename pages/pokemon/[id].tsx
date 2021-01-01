@@ -1,20 +1,19 @@
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import React from 'react';
-import Layout from '../components/Layout';
+import Layout from '../../components/Layout';
 
 interface pokemonProps {}
 
-const pokemon = ({ pokeman }) => {
-  console.log(pokeman);
+const Pokemon = ({ pokeman }) => {
   return (
     <Layout title={pokeman.name}>
       <h1 className="mb-2 text-4xl text-center capitalize">
         {pokeman.id}. {pokeman.name}
       </h1>
-      <div className="flex items-center justify-evenly">
+      <div className="flex items-center justify-center">
         <img
-          className="w-40 h-40"
+          className="w-40 h-40 mr-4"
           src={pokeman.image}
           alt={pokeman.name}
         />
@@ -60,4 +59,4 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   }
 };
 
-export default pokemon;
+export default Pokemon;
