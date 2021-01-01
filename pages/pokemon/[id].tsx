@@ -1,9 +1,7 @@
-import { GetServerSideProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import Link from 'next/link';
 import React from 'react';
 import Layout from '../../components/Layout';
-
-interface pokemonProps {}
 
 const Pokemon = ({ pokeman }) => {
   return (
@@ -26,8 +24,8 @@ const Pokemon = ({ pokeman }) => {
             {pokeman.height}
           </p>
           <h2 className="mt-6 mb-2 text-2xl">Types</h2>
-          {pokeman.types.map((type) => (
-            <p key="index">{type.type.name}</p>
+          {pokeman.types.map((type, index) => (
+            <p key={index}>{type.type.name}</p>
           ))}
         </div>
       </div>
@@ -40,12 +38,25 @@ const Pokemon = ({ pokeman }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const id = query.id;
+export const getStaticPaths: GetStaticPaths = async () => {
+  const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=150');
+  const { results } = await res.json();
+
+  const paths = results.map((result, index) => ({
+    params: { id: `${index + 1}` },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${params.id}`);
     const pokeman = await res.json();
-    const paddedId = ('00' + id).slice(-3);
+    const paddedId = ('00' + params.id).slice(-3);
     const image = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${paddedId}.png`;
     pokeman.image = image;
 
