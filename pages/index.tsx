@@ -1,13 +1,9 @@
-import Head from 'next/head'
+import Layout from '../components/Layout';
 
 export default function Home() {
   return (
-    <div>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      hoge
-    </div>
-  )
+    <Layout title="Next.js Pokedex">
+      <h1 className="mb-8 text-4xl text-center">Next.js Pokedex</h1>
+    </Layout>
+  );
 }
