@@ -2,7 +2,7 @@ import { GetStaticProps } from 'next';
 import Layout from '../components/Layout';
 import Link from 'next/link';
 
-interface Pokemon {
+export interface Pokemon {
   name: string;
   url: string;
   image: string;
@@ -16,7 +16,7 @@ const Home = ({ pokemon }: { pokemon: Pokemon[] }) => {
         {pokemon.map((pokeman, index) => (
           <li key={index}>
             <Link href={`/pokemon?id=${index + 1}`}>
-              <a className="flex items-center p-4 my-2 text-lg capitalize bg-gray-200 border rounded-md border-gray">
+              <a className="flex items-center p-4 my-2 text-lg capitalize bg-gray-100 border rounded-md border-gray">
                 <img
                   className="w-20 h-20 mr-3"
                   src={pokeman.image}
