@@ -2,8 +2,18 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import Link from 'next/link';
 import React from 'react';
 import Layout from '../../components/Layout';
+import { useRouter } from 'next/router';
 
 const Pokemon = ({ pokeman }) => {
+
+  const router = useRouter();
+
+  // If the page is not yet generated, this will be displayed
+  // initially until getStaticProps() finishes running
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Layout title={pokeman.name}>
       <h1 className="mb-2 text-4xl text-center capitalize">
@@ -48,7 +58,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 };
 
@@ -64,6 +74,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         pokeman,
       },
+      revalidate: 1,
     };
   } catch (error) {
     console.error(error);
